@@ -141,8 +141,6 @@ if Enter == '2' :
 	      else :
 	      	print(f'\033[0;39m» \033[0;31mLogin Failed For \033[0;34m{user}\033[0;39m')
 if Enter == '3' :
-	   print('\033[1;39m» \033[1;34mNot Finished')
-	   exit('\033[1;39m')
 	   try :
 	   	uspd= open('Cofb.txt','r')
 	   except :
@@ -172,11 +170,8 @@ if Enter == '3' :
 	      if 'Successful Operation' in req6.text :
 	      	token = req6.json()['data']['token']
 	      	token_key = req6.json()['data']['token_key']
-	      	team = input('\x1b[0;39m* \x1b[0;32mEnter The Name Of The Two Teams \x1b[0;34m:\x1b[0;39m ')
-	      	splitfile = team.strip().split('/')
-	      	zd_name = splitfile[0]
-	      	kd_name = splitfile[1]
-	      	link7 = 'https://api.cofb8.com/match/list'
+	      	sc_id = input('\x1b[0;39m* \x1b[0;32mEnter SC_ID \x1b[0;34m:\x1b[0;39m ')
+	      	link7 = 'https://api.cofb8.com/match/play'
 	      	header7 = {'Host':'api.cofb8.com',
 		      'content-length':'19',
   			'lang':'US',
@@ -193,35 +188,20 @@ if Enter == '3' :
   			'referer':'https://www.cofb8.com/',
   			'accept-encoding':'gzip, deflate',
 		  	'accept-language':'ar-AE,ar;q=0.9,en-US;q=0.8,en;q=0.7'}
-	      	for pro in range (2) :
-	      		prod = pro+1
-	      		data7 = {'llang':'US','ls_id':'0','page':prod,'limit':'10'}
-	      		req7 = requests.post(link7,headers=header7,data=data7)
-	      		for dpro in req7.json()['data']['list'] :
-	      			if dpro['zd_name'] == zd_name :
-	      			 	if dpro['kd_name'] == kd_name :
-	      			 		sc_id = dpro['sc_id']
-	      		try :	 		
-		      		link8 = 'https://api.cofb8.com/match/play'
-		      		header8 = header7
-		      		data8 = {'lang':'US','sc_id':sc_id}
-		      		req8 = requests.post(link8,headers=header8,data=data8)
-		      		result = input('\x1b[0;39m* \x1b[0;32mEnter The Match Result \x1b[0;34m:\x1b[0;39m ')
-		      		splitfile2 = result.strip().split('/')
-		      		zd = int(splitfile2[0])
-		      		kd = int(splitfile2[1])
-		      		for vpro in req8.json()['data']['bd'] :
-		      			 								if vpro['zd'] == zd :
-		      			 									if vpro['kd'] == kd :
-		      			 										bd_id = vpro['bd_id']
-		      			 										os.system('clear')
-		      			 										print(f'\033[0;39m» \033[0;34m{sc_id}')
-		      			 										print(f'\033[0;39m» \033[0;34m{bd_id}')
-		      			 										input()
-	      		except :
-	      			continue		   	
-	      		
-	      		
+	      	data7 = {'lang':'US','sc_id':sc_id}
+	      	req7 = requests.post(link7,headers=header7,data=data7)
+	      	result = input('\x1b[0;39m* \x1b[0;32mEnter The Match Result \x1b[0;34m:\x1b[0;39m ')
+	      	splitfile2 = result.strip().split('/')
+	      	zd = int(splitfile2[0])
+	      	kd = int(splitfile2[1])
+	      	for vpro in req7.json()['data']['bd'] :
+	      		if vpro['zd'] == zd :
+	      			if vpro['kd'] == kd :
+	      				bd_id = vpro['bd_id']
+	      				os.system('clear')
+	      				print(f'\033[0;39m» \033[0;34m{sc_id}')
+	      				print(f'\033[0;39m» \033[0;34m{bd_id}')
+	      				input()
 	      else :
 	      	print(f'\033[0;39m» \033[0;31mLogin Failed For \033[0;34m{user}\033[0;39m')
 	      	print()
